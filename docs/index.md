@@ -3,7 +3,7 @@ layout: default
 title: "Harbour"
 ---
 
-<div style="text-align:center"><a href="https://github.com/hb-X11"><img src="assets/img/nuklear.svg" /></a></div>
+<div style="text-align:center"><a href="https://github.com/rjopek/hb-X11"><img src="assets/img/nuklear.svg" /></a></div>
 ---
 
 # Harbour Nuklear backend
@@ -16,4 +16,4 @@ This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI
 hbmk2 hbX11.hbp
 ```
 
-[License](LICENSE) is obviously applied only for this repository, not what it builds.
+[License]([LICENSE](https://github.com/rjopek/hb-X11/blob/main/LICENSE)) is obviously applied only for this repository, not what it builds.

@@ -6,7 +6,6 @@ This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI
 
 ```
 hbmk2 hbX11.hbp
-
 ```
 
 [License](LICENSE) is obviously applied only for this repository, not what it builds.
