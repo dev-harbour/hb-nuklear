@@ -1,6 +1,8 @@
 # Harbour Nuklear backend
 
-This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). It works on on all supported platforms with an OpenGL backend, including iOS and Android. Demo version.
+This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). It works on on all supported platforms with an OpenGL backend, including iOS and Android.
+
+(This is only a demo version.)
 
 ## How to Build
 
