@@ -16,4 +16,4 @@ This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI
 hbmk2 hbX11.hbp
 ```
 
-[License]([LICENSE](https://github.com/rjopek/hb-X11/blob/main/LICENSE)) is obviously applied only for this repository, not what it builds.
+[License](https://github.com/rjopek/hb-X11/blob/main/LICENSE) is obviously applied only for this repository, not what it builds.
