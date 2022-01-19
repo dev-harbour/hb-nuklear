@@ -52,7 +52,14 @@ HB_FUNC( HB_OPEN )
    xw.win = XCreateWindow( xw.dpy, xw.root, 0, 0, xw.width, xw.height, 0, XDefaultDepth( xw.dpy, xw.screen ), InputOutput,
       xw.vis, CWEventMask | CWColormap, &xw.swa );
 
-   XStoreName( xw.dpy, xw.win, xw.win_name );
+   XStoreName(xw.dpy, xw.win, xw.win_name);
+   XChangeProperty( xw.dpy, xw.win, XInternAtom( xw.dpy, "_NET_WM_NAME", False ),
+      XInternAtom( xw.dpy, "UTF8_STRING", False ), 8, PropModeReplace, ( unsigned char * ) xw.win_name, strlen( xw.win_name ) );
+
+   XSetIconName(xw.dpy, xw.win, xw.win_name);
+   XChangeProperty( xw.dpy, xw.win, XInternAtom( xw.dpy, "_NET_WM_ICON_NAME", False ),
+      XInternAtom( xw.dpy, "UTF8_STRING", False ), 8, PropModeReplace, ( unsigned char * ) xw.win_name, strlen( xw.win_name ) );
+
    XMapWindow( xw.dpy, xw.win );
 
    xw.wm_delete_window = XInternAtom( xw.dpy, "WM_DELETE_WINDOW", False );
