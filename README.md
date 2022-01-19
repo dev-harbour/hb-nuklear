@@ -4,10 +4,19 @@ This backend provides support for [Nuklear](https://github.com/Immediate-Mode-UI
 
 (This is only a demo version.)
 
-## How to Build
+## Building
 
-```
-hbmk2 hbX11.hbp
-```
+- Build static library:
 
-[License](LICENSE) is obviously applied only for this repository, not what it builds.
+   ```
+   hbmk2 hbX11.hbp
+   ```
+
+- Build and run sample and test code:
+
+   ```
+   hbmk2 example_00.prg
+   ./example_00
+   ```
+
+[License.](LICENSE)
