@@ -1,6 +1,6 @@
 # hb-nuklear
 
-Harbour module implementing bindings to [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). *It works on on all supported platforms with an OpenGL backend, including iOS and Android. (This is only a demo version.)*
+Harbour module implementing bindings to [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). 
 
 ### Getting Started
 
