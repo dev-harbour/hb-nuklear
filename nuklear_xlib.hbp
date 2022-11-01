@@ -1,0 +1,22 @@
+# nuklear_xlib
+
+-hblib
+-inc
+
+-olib/nuklear_xlib/${hb_plat}/${hb_comp}/${hb_name}
+
+-w3 -es2 -gc3
+
+-depkeyhead=xlib:Xlib.h
+-depincpath=xlib:/usr/include/X11
+-depincpath=xlib:/usr/local/include/X11
+
+-iinclude/nuklear_xlib
+
+-hbx=include/nuklear_xlib/${hb_name}.hbx
+
+src/*.c
+src/nuklear_xlib/*.c
+
+$hb_pkg_dynlib.hbm
+$hb_pkg_install.hbm

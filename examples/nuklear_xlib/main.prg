@@ -1,27 +1,7 @@
-# hb-nuklear
+/*
+ *
+ */
 
-Harbour module implementing bindings to [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). *It works on on all supported platforms with an OpenGL backend, including iOS and Android. (This is only a demo version.)*
-
-### Getting Started
-
-Installing hb-nuklear requires Nuklear including its headers. For more info see [getting started](examples/README.md).
-
-## Building
-
-- Build static library:
-
-   ```
-   hbmk2 nuklear_xlib.hbp
-   ```
-
-- Build and run sample and test code:
-
-   ```
-   hbmk2 main.prg
-   ./main
-   ```
-
-``` harbour
 #include "nuklear_xlib.ch"
 
 #define DTIME    20
@@ -82,6 +62,3 @@ PROCEDURE Main()
    CloseWindow( aWin )
 
    RETURN
-```
-
-![This is an image](https://github.com/dev-harbour/hb-nuklear/tree/main/docs/assets/img/nuklear_xlib/main.png "main" )
