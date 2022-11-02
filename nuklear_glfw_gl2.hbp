@@ -8,8 +8,10 @@
 -w3 -es2 -gc3
 
 -depkeyhead=glfw:glfw3.h
+-depcontrol=glfw:${HB_WITH_GLFW}
 -depincpath=glfw:/usr/include/GLFW
 -depincpath=glfw:/usr/local/include/GLFW
+-depincpath=glfw:/usr/local/opt/cairo/include/GLFW
 
 -iinclude/nuklear_glfw_gl2
 
