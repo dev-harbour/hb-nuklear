@@ -3,7 +3,7 @@
 -hblib
 -inc
 
--olib/nuklear_xlib/${hb_plat}/${hb_comp}/${hb_name}
+-olib/${hb_plat}/${hb_comp}/${hb_name}
 
 -w3 -es2 -gc3
 
@@ -13,7 +13,7 @@
 
 -iinclude/nuklear_xlib
 
--hbx=include/nuklear_xlib/${hb_name}.hbx
+-hbx=include/${hb_name}.hbx
 
 src/*.c
 src/nuklear_xlib/*.c

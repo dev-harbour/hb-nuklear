@@ -1,0 +1,18 @@
+description=Harbour nuklear_glfw_gl2 backend
+
+incpaths=include
+headers=include/${hb_name}.ch
+
+libs=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
+
+#Windows
+#libs=glfw3
+#libs=opengl32
+
+#linux
+libs=glfw
+libs=GL
+
+libpaths=lib/${hb_plat}/${hb_comp}
+{darwin}libpaths=/usr/local/lib
+{linux}libpaths=/usr/local/lib

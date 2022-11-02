@@ -14,9 +14,11 @@
 #define NK_INCLUDE_STANDARD_VARARGS
 #define NK_BUTTON_TRIGGER_ON_RELEASE
 
-#define NK_XLIB_IMPLEMENTATION
+//#define NK_XLIB_IMPLEMENTATION
+//#include "hb_nuklear_xlib.h"
 
-#include "hb_nuklear_xlib.h"
+#define NK_GLFW_GL2_IMPLEMENTATION
+#include "hb_glfw_opengl2.h"
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 
@@ -31,7 +33,7 @@
 // void nk_input_begin(struct nk_context*);
 HB_FUNC( NK_INPUT_BEGIN )
 {
-   struct nk_context* ctx = hb_parptr( 1 );
+   struct nk_context *ctx = hb_parptr( 1 );
 
    if( ctx )
    {
@@ -76,20 +78,19 @@ HB_FUNC( NK_INPUT_END )
 // nk_bool nk_begin(struct nk_context *ctx, const char *title, struct nk_rect bounds, nk_flags flags);
 HB_FUNC( NK_BEGIN )
 {
-   PHB_ITEM pItem;
+   PHB_ITEM pArray;
 
-   struct nk_context* ctx = hb_parptr( 1 );
+   struct nk_context *ctx = hb_parptr( 1 );
 
    if( ctx && hb_param( 2, HB_IT_STRING ) != NULL &&
-    ( pItem = hb_param( 3, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pItem ) == 4 &&
+   ( pArray = hb_param( 3, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pArray ) == 4 &&
               hb_param( 4, HB_IT_INTEGER ) != NULL )
    {
       struct nk_rect bounds;
-
-      bounds.x = hb_arrayGetNI( pItem, 1 );
-      bounds.y = hb_arrayGetNI( pItem, 2 );
-      bounds.w = hb_arrayGetNI( pItem, 3 );
-      bounds.h = hb_arrayGetNI( pItem, 4 );
+      bounds.x = hb_arrayGetNI( pArray, 1 );
+      bounds.y = hb_arrayGetNI( pArray, 2 );
+      bounds.w = hb_arrayGetNI( pArray, 3 );
+      bounds.h = hb_arrayGetNI( pArray, 4 );
 
       hb_retl( nk_begin( ctx, hb_parc( 2 ), bounds, ( nk_flags ) hb_parni( 4 ) ) );
    }
@@ -104,7 +105,7 @@ HB_FUNC( NK_BEGIN )
 // void nk_end(struct nk_context *ctx);
 HB_FUNC( NK_END )
 {
-   struct nk_context* ctx = hb_parptr( 1 );
+   struct nk_context *ctx = hb_parptr( 1 );
 
    if( ctx )
    {
@@ -137,7 +138,7 @@ HB_FUNC( NK_END )
 // nk_bool nk_window_is_hidden(struct nk_context*, const char*);
 HB_FUNC( NK_WINDOW_IS_HIDDEN )
 {
-   struct nk_context* ctx = hb_parptr( 1 );
+   struct nk_context *ctx = hb_parptr( 1 );
 
    if( ctx && hb_param( 2, HB_IT_STRING ) != NULL )
    {
@@ -166,8 +167,37 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // void nk_layout_reset_min_row_height(struct nk_context*);
 // struct nk_rect nk_layout_widget_bounds(struct nk_context*);
 // float nk_layout_ratio_from_pixel(struct nk_context*, float pixel_width);
+
 // void nk_layout_row_dynamic(struct nk_context *ctx, float height, int cols);
+HB_FUNC( NK_LAYOUT_ROW_DYNAMIC )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_NUMERIC ) != NULL && hb_param( 3, HB_IT_INTEGER ) != NULL )
+   {
+      nk_layout_row_dynamic( ctx, ( float ) hb_parnd( 2 ), hb_parni( 3 ));
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_layout_row_static(struct nk_context *ctx, float height, int item_width, int cols);
+HB_FUNC( NK_LAYOUT_ROW_STATIC )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_NUMERIC ) != NULL && hb_param( 3, HB_IT_INTEGER ) != NULL && hb_param( 4, HB_IT_INTEGER ) != NULL )
+   {
+      nk_layout_row_static( ctx, ( float ) hb_parnd( 2 ), hb_parni( 3 ), hb_parni( 4 ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_layout_row_begin(struct nk_context *ctx, enum nk_layout_format fmt, float row_height, int cols);
 // void nk_layout_row_push(struct nk_context*, float value);
 // void nk_layout_row_end(struct nk_context*);
@@ -210,7 +240,22 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // struct nk_rect nk_widget_bounds(struct nk_context*);
 // struct nk_vec2 nk_widget_position(struct nk_context*);
 // struct nk_vec2 nk_widget_size(struct nk_context*);
+
 // float nk_widget_width(struct nk_context*);
+HB_FUNC( NK_WIDGET_WIDTH )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx )
+   {
+      hb_retnd( ( float ) nk_widget_width( ctx ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // float nk_widget_height(struct nk_context*);
 // nk_bool nk_widget_is_hovered(struct nk_context*);
 // nk_bool nk_widget_is_mouse_clicked(struct nk_context*, enum nk_buttons);
@@ -220,7 +265,22 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // void nk_text_colored(struct nk_context*, const char*, int, nk_flags, struct nk_color);
 // void nk_text_wrap(struct nk_context*, const char*, int);
 // void nk_text_wrap_colored(struct nk_context*, const char*, int, struct nk_color);
+
 // void nk_label(struct nk_context*, const char*, nk_flags align);
+HB_FUNC( NK_LABEL )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL && hb_param( 3, HB_IT_NUMERIC ) != NULL )
+   {
+      nk_label( ctx, hb_parc( 2 ), hb_parni( 3 ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_label_colored(struct nk_context*, const char*, nk_flags align, struct nk_color);
 // void nk_label_wrap(struct nk_context*, const char*);
 // void nk_label_colored_wrap(struct nk_context*, const char*, struct nk_color);
@@ -242,7 +302,22 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // void nk_value_color_float(struct nk_context*, const char *prefix, struct nk_color);
 // void nk_value_color_hex(struct nk_context*, const char *prefix, struct nk_color);
 // nk_bool nk_button_text(struct nk_context*, const char *title, int len);
+
 // nk_bool nk_button_label(struct nk_context*, const char *title);
+HB_FUNC( NK_BUTTON_LABEL )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL )
+   {
+      hb_retl( nk_button_label( ctx, hb_parc( 2 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // nk_bool nk_button_color(struct nk_context*, struct nk_color);
 // nk_bool nk_button_symbol(struct nk_context*, enum nk_symbol_type);
 // nk_bool nk_button_image(struct nk_context*, struct nk_image img);
@@ -271,7 +346,22 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // nk_bool nk_checkbox_flags_text(struct nk_context*, const char*, int, unsigned int *flags, unsigned int value);
 // nk_bool nk_radio_label(struct nk_context*, const char*, nk_bool *active);
 // nk_bool nk_radio_text(struct nk_context*, const char*, int, nk_bool *active);
+
 // nk_bool nk_option_label(struct nk_context*, const char*, nk_bool active);
+HB_FUNC( NK_OPTION_LABEL )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL && hb_param( 3, HB_IT_LOGICAL ) != NULL )
+   {
+      hb_retl( nk_option_label( ctx, hb_parc( 2 ), hb_parl( 3 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // nk_bool nk_option_text(struct nk_context*, const char*, int, nk_bool active);
 // nk_bool nk_selectable_label(struct nk_context*, const char*, nk_flags align, nk_bool *value);
 // nk_bool nk_selectable_text(struct nk_context*, const char*, int, nk_flags align, nk_bool *value);
@@ -291,13 +381,77 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // nk_bool nk_slider_int(struct nk_context*, int min, int *val, int max, int step);
 // nk_bool nk_progress(struct nk_context*, nk_size *cur, nk_size max, nk_bool modifyable);
 // nk_size nk_prog(struct nk_context*, nk_size cur, nk_size max, nk_bool modifyable);
+
 // struct nk_colorf nk_color_picker(struct nk_context*, struct nk_colorf, enum nk_color_format);
+HB_FUNC( NK_COLOR_PICKER )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   PHB_ITEM pArrayPar;
+
+   if( ctx && ( pArrayPar = hb_param( 2, HB_IT_ARRAY ) ) != NULL && hb_param( 3, HB_IT_INTEGER ) != NULL )
+   {
+      struct nk_colorf colorPar;
+      colorPar.r = ( float ) hb_arrayGetND( pArrayPar, 1 );
+      colorPar.g = ( float ) hb_arrayGetND( pArrayPar, 2 );
+      colorPar.b = ( float ) hb_arrayGetND( pArrayPar, 3 );
+      colorPar.a = ( float ) hb_arrayGetND( pArrayPar, 4 );
+
+      struct nk_colorf colorRet = nk_color_picker( ctx, colorPar, hb_parni( 3 ) );
+
+      PHB_ITEM pArrayRet = hb_itemArrayNew( 4 );
+
+      hb_arraySetND( pArrayRet, 1, ( float ) colorRet.r );
+      hb_arraySetND( pArrayRet, 2, ( float ) colorRet.g );
+      hb_arraySetND( pArrayRet, 3, ( float ) colorRet.b );
+      hb_arraySetND( pArrayRet, 4, ( float ) colorRet.a );
+
+      hb_itemReturnRelease( pArrayRet );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
 // nk_bool nk_color_pick(struct nk_context*, struct nk_colorf*, enum nk_color_format);
+
 // void nk_property_int(struct nk_context*, const char *name, int min, int *val, int max, int step, float inc_per_pixel);
+HB_FUNC( NK_PROPERTY_INT )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL && hb_param( 3, HB_IT_INTEGER ) != NULL && hb_param( 4, HB_IT_BYREF ) != NULL &&
+              hb_param( 5, HB_IT_INTEGER ) != NULL && hb_param( 6, HB_IT_INTEGER ) != NULL && hb_param( 7, HB_IT_NUMERIC ) != NULL )
+   {
+      int val = 0;
+      nk_property_int( ctx, hb_parc( 2 ), hb_parni( 3 ), &val, hb_parni( 5 ), hb_parni( 6 ), ( float ) hb_parnd( 7 ) );
+      hb_storni( val, 4 );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_property_float(struct nk_context*, const char *name, float min, float *val, float max, float step, float inc_per_pixel);
 // void nk_property_double(struct nk_context*, const char *name, double min, double *val, double max, double step, float inc_per_pixel);
 // int nk_propertyi(struct nk_context*, const char *name, int min, int val, int max, int step, float inc_per_pixel);
+
 // float nk_propertyf(struct nk_context*, const char *name, float min, float val, float max, float step, float inc_per_pixel);
+HB_FUNC( NK_PROPERTYF )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL && hb_param( 3, HB_IT_NUMERIC ) != NULL && hb_param( 4, HB_IT_NUMERIC ) != NULL &&
+      hb_param( 5, HB_IT_NUMERIC ) != NULL && hb_param( 6, HB_IT_NUMERIC ) != NULL && hb_param( 7, HB_IT_NUMERIC ) != NULL )
+   {
+      hb_retnd( ( float ) nk_propertyf( ctx, hb_parc( 2 ), ( float ) hb_parnd( 3 ), ( float ) hb_parnd( 4 ), ( float ) hb_parnd( 5 ), ( float ) hb_parnd( 6 ), ( float ) hb_parnd( 7 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // double nk_propertyd(struct nk_context*, const char *name, double min, double val, double max, double step, float inc_per_pixel);
 // nk_flags nk_edit_string(struct nk_context*, nk_flags, char *buffer, int *len, int max, nk_plugin_filter);
 // nk_flags nk_edit_string_zero_terminated(struct nk_context*, nk_flags, char *buffer, int max, nk_plugin_filter);
@@ -328,7 +482,34 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // void nk_combobox_callback(struct nk_context*, void(*item_getter)(void*, int, const char**), void*, int *selected, int count, int item_height, struct nk_vec2 size);
 // nk_bool nk_combo_begin_text(struct nk_context*, const char *selected, int, struct nk_vec2 size);
 // nk_bool nk_combo_begin_label(struct nk_context*, const char *selected, struct nk_vec2 size);
+
 // nk_bool nk_combo_begin_color(struct nk_context*, struct nk_color color, struct nk_vec2 size);
+HB_FUNC( NK_COMBO_BEGIN_COLOR )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   PHB_ITEM pArray1;
+   PHB_ITEM pArray2;
+
+   if( ctx && ( pArray1 = hb_param( 2, HB_IT_ARRAY ) ) != NULL && ( pArray2 = hb_param( 3, HB_IT_ARRAY ) ) != NULL )
+   {
+      struct nk_color color;
+      color.r = ( unsigned char ) hb_arrayGetNI( pArray1, 1 );
+      color.g = ( unsigned char ) hb_arrayGetNI( pArray1, 2 );
+      color.b = ( unsigned char ) hb_arrayGetNI( pArray1, 3 );
+      color.a = ( unsigned char ) hb_arrayGetNI( pArray1, 4 );
+
+      struct nk_vec2 size;
+      size.x = ( float ) hb_arrayGetND( pArray2, 1 );
+      size.y = ( float ) hb_arrayGetND( pArray2, 2 );
+
+      hb_retl( nk_combo_begin_color( ctx, color, size ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // nk_bool nk_combo_begin_symbol(struct nk_context*,  enum nk_symbol_type,  struct nk_vec2 size);
 // nk_bool nk_combo_begin_symbol_label(struct nk_context*, const char *selected, enum nk_symbol_type, struct nk_vec2 size);
 // nk_bool nk_combo_begin_symbol_text(struct nk_context*, const char *selected, int, enum nk_symbol_type, struct nk_vec2 size);
@@ -342,7 +523,22 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // nk_bool nk_combo_item_symbol_label(struct nk_context*, enum nk_symbol_type, const char*, nk_flags alignment);
 // nk_bool nk_combo_item_symbol_text(struct nk_context*, enum nk_symbol_type, const char*, int, nk_flags alignment);
 // void nk_combo_close(struct nk_context*);
+
 // void nk_combo_end(struct nk_context*);
+HB_FUNC( NK_COMBO_END )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx )
+   {
+      nk_combo_end( ctx );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // nk_bool nk_contextual_begin(struct nk_context*, nk_flags, struct nk_vec2, struct nk_rect trigger_bounds);
 // nk_bool nk_contextual_item_text(struct nk_context*, const char*, int,nk_flags align);
 // nk_bool nk_contextual_item_label(struct nk_context*, const char*, nk_flags align);
@@ -424,7 +620,36 @@ HB_FUNC( NK_RGB )
 // struct nk_color nk_rgb_bv(const nk_byte* rgb);
 // struct nk_color nk_rgb_f(float r, float g, float b);
 // struct nk_color nk_rgb_fv(const float *rgb);
+
 // struct nk_color nk_rgb_cf(struct nk_colorf c);
+HB_FUNC( NK_RGB_CF )
+{
+   PHB_ITEM pArrayPar;
+
+   if( ( pArrayPar = hb_param( 1, HB_IT_ARRAY ) ) != NULL )
+   {
+      struct nk_colorf colorPar;
+      colorPar.r = ( float ) hb_arrayGetND( pArrayPar, 1 );
+      colorPar.g = ( float ) hb_arrayGetND( pArrayPar, 2 );
+      colorPar.b = ( float ) hb_arrayGetND( pArrayPar, 3 );
+      colorPar.a = ( float ) hb_arrayGetND( pArrayPar, 4 );
+
+      struct nk_color colorRet = nk_rgb_cf( colorPar );
+
+      PHB_ITEM pArrayRet = hb_itemArrayNew( 3 );
+
+      hb_arraySetNI( pArrayRet, 1, ( unsigned char ) colorRet.r );
+      hb_arraySetNI( pArrayRet, 2, ( unsigned char ) colorRet.g );
+      hb_arraySetNI( pArrayRet, 3, ( unsigned char ) colorRet.b );
+
+      hb_itemReturnRelease( pArrayRet );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // struct nk_color nk_rgb_hex(const char *rgb);
 // struct nk_color nk_rgba(int r, int g, int b, int a);
 // struct nk_color nk_rgba_u32(nk_uint);
@@ -486,7 +711,27 @@ HB_FUNC( NK_RGB )
 // struct nk_nine_slice nk_sub9slice_handle(nk_handle, nk_ushort w, nk_ushort h, struct nk_rect sub_region, nk_ushort l, nk_ushort t, nk_ushort r, nk_ushort b);
 // nk_hash nk_murmur_hash(const void *key, int len, nk_hash seed);
 // void nk_triangle_from_direction(struct nk_vec2 *result, struct nk_rect r, float pad_x, float pad_y, enum nk_heading);
+
 // struct nk_vec2 nk_vec2(float x, float y);
+HB_FUNC( NK_VEC2 )
+{
+   if( hb_param( 1, HB_IT_NUMERIC ) != NULL && hb_param( 2, HB_IT_NUMERIC ) != NULL )
+   {
+      struct nk_vec2 size = nk_vec2( ( float ) hb_parnd( 1 ), ( float ) hb_parnd( 2 ) );
+
+      PHB_ITEM pArray = hb_itemArrayNew( 2 );
+
+      hb_arraySetND( pArray, 1, ( float ) size.x );
+      hb_arraySetND( pArray, 2, ( float ) size.y );
+
+      hb_itemReturnRelease( pArray );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // struct nk_vec2 nk_vec2i(int x, int y);
 // struct nk_vec2 nk_vec2v(const float *xy);
 // struct nk_vec2 nk_vec2iv(const int *xy);
@@ -502,14 +747,14 @@ HB_FUNC( NK_RECT )
    {
       struct nk_rect rect = nk_rect( ( float ) hb_parnd( 1 ), ( float ) hb_parnd( 2 ), ( float ) hb_parnd( 3 ), ( float ) hb_parnd( 4 ) );
 
-      PHB_ITEM pItem = hb_itemArrayNew( 4 );
+      PHB_ITEM pArray = hb_itemArrayNew( 4 );
 
-      hb_arraySetND( pItem, 1, ( float ) rect.x );
-      hb_arraySetND( pItem, 2, ( float ) rect.y );
-      hb_arraySetND( pItem, 3, ( float ) rect.w );
-      hb_arraySetND( pItem, 4, ( float ) rect.h );
+      hb_arraySetND( pArray, 1, ( float ) rect.x );
+      hb_arraySetND( pArray, 2, ( float ) rect.y );
+      hb_arraySetND( pArray, 3, ( float ) rect.w );
+      hb_arraySetND( pArray, 4, ( float ) rect.h );
 
-      hb_itemReturnRelease( pItem );
+      hb_itemReturnRelease( pArray );
    }
    else
    {

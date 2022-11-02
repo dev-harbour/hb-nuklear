@@ -1,0 +1,22 @@
+# nuklear_glfw_gl2
+
+-hblib
+-inc
+
+-olib/${hb_plat}/${hb_comp}/${hb_name}
+
+-w3 -es2 -gc3
+
+-depkeyhead=glfw:glfw3.h
+-depincpath=glfw:/usr/include/GLFW
+-depincpath=glfw:/usr/local/include/GLFW
+
+-iinclude/nuklear_glfw_gl2
+
+-hbx=include/${hb_name}.hbx
+
+src/*.c
+src/nuklear_glfw_gl2/*.c
+
+$hb_pkg_dynlib.hbm
+$hb_pkg_install.hbm

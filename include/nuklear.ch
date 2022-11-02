@@ -17,6 +17,7 @@
 #define WIN_NAME   9
 #define CTX        10
 
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* Nuklear */
 #define NK_WINDOW_BORDER             0
 #define NK_WINDOW_MOVABLE            1
@@ -29,6 +30,21 @@
 #define NK_WINDOW_BACKGROUND         128
 #define NK_WINDOW_SCALE_LEFT         256
 #define NK_WINDOW_NO_INPUT           512
+
+/* Text */
+#define NK_TEXT_ALIGN_LEFT           0x01
+#define NK_TEXT_ALIGN_CENTERED       0x02
+#define NK_TEXT_ALIGN_RIGHT          0x04
+#define NK_TEXT_ALIGN_TOP            0x08
+#define NK_TEXT_ALIGN_MIDDLE         0x10
+#define NK_TEXT_ALIGN_BOTTOM         0x20
+
+#define NK_TEXT_LEFT                 NK_TEXT_ALIGN_MIDDLE + NK_TEXT_ALIGN_LEFT
+#define NK_TEXT_CENTERED             NK_TEXT_ALIGN_MIDDLE + NK_TEXT_ALIGN_CENTERED
+#define NK_TEXT_RIGHT                NK_TEXT_ALIGN_MIDDLE + NK_TEXT_ALIGN_RIGHT
+
+#define NK_ANTI_ALIASING_OFF         0
+#define NK_ANTI_ALIASING_ON          1
 
 #endif /* end NUKLEAR_CH_ */
 
