@@ -14,6 +14,7 @@ PROCEDURE Main()
    LOCAL pEvent_queue
    LOCAL pFont
    LOCAL pCtx
+   LOCAL timeout
    LOCAL lGet_event
    LOCAL nEvent
    LOCAL nOp       := EASY
@@ -57,9 +58,9 @@ PROCEDURE Main()
 
    WHILE( .T. )
 
-      al_init_timeout( 0.01 )
+      al_init_timeout( @timeout, 0.06 )
 
-      lGet_event := al_wait_for_event_until( pEvent_queue, @nEvent )
+      lGet_event := al_wait_for_event_until( pEvent_queue, @nEvent, @timeout )
 
       IF( lGet_event .AND. nEvent == ALLEGRO_EVENT_DISPLAY_CLOSE )
          EXIT
