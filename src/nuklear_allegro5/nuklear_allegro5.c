@@ -291,12 +291,11 @@ HB_FUNC( AL_GET_NEXT_EVENT )
 // AL_FUNC(void, al_init_timeout, (ALLEGRO_TIMEOUT *timeout, double seconds));
 HB_FUNC( AL_INIT_TIMEOUT )
 {
-   if( hb_param( 1, HB_IT_NUMERIC ) != NULL )
+   if( hb_param( 1, HB_IT_BYREF ) != NULL && hb_param( 2, HB_IT_NUMERIC ) != NULL )
    {
       ALLEGRO_TIMEOUT timeout;
 
-      /* NOTE */
-      al_init_timeout( &timeout, hb_parnd( 1 ) );
+      al_init_timeout( &timeout, hb_parnd( 2 ) );
    }
    else
    {
@@ -418,7 +417,7 @@ HB_FUNC( AL_WAIT_FOR_EVENT_UNTIL )
 {
    ALLEGRO_EVENT_QUEUE *pEvent_queue = hb_event_queue_Param( 1 );
 
-   if( pEvent_queue && hb_param( 2, HB_IT_BYREF ) != NULL )
+   if( pEvent_queue && hb_param( 2, HB_IT_BYREF ) != NULL && hb_param( 3, HB_IT_BYREF ) != NULL )
    {
       ALLEGRO_EVENT event;
       ALLEGRO_TIMEOUT timeout;
