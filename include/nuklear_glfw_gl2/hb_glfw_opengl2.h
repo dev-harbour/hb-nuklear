@@ -2,8 +2,8 @@
  *
  */
 
-#ifndef HB_NUKLEAR_XLIB_H_
-#define HB_NUKLEAR_XLIB_H_
+#ifndef HB_GLFW_OPENGL2_H_
+#define HB_GLFW_OPENGL2_H_
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -36,4 +36,4 @@ HB_EXTERN_END
 
 #define HB_ERR_ARGS() ( hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS ) )
 
-#endif /* end HB_NUKLEAR_XLIB_H_ */
+#endif /* end HB_GLFW_OPENGL2_H_ */

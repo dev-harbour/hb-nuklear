@@ -14,11 +14,14 @@
 #define NK_INCLUDE_STANDARD_VARARGS
 #define NK_BUTTON_TRIGGER_ON_RELEASE
 
+#define NK_ALLEGRO5_IMPLEMENTATION
+#include "hb_nuklear_allegro5.h"
+
+//#define NK_GLFW_GL2_IMPLEMENTATION
+//#include "hb_glfw_opengl2.h"
+
 //#define NK_XLIB_IMPLEMENTATION
 //#include "hb_nuklear_xlib.h"
-
-#define NK_GLFW_GL2_IMPLEMENTATION
-#include "hb_glfw_opengl2.h"
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 

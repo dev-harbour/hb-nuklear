@@ -1,0 +1,20 @@
+description=Harbour nuklear_allegro5 backend
+
+incpaths=include
+headers=include/${hb_name}.ch
+
+libs=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
+
+#Windows
+
+#linux
+libs=allegro
+libs=allegro_main
+libs=allegro_image
+libs=allegro_font
+libs=allegro_ttf
+libs=allegro_primitives
+
+libpaths=lib/${hb_plat}/${hb_comp}
+{darwin}libpaths=/usr/local/lib
+{linux}libpaths=/usr/local/lib

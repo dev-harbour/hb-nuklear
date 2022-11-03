@@ -1,0 +1,24 @@
+# nuklear_allegro5
+
+-hblib
+-inc
+
+-olib/${hb_plat}/${hb_comp}/${hb_name}
+
+-w3 -es2 -gc3
+
+-depkeyhead=allegro5:allegro5.h
+-depcontrol=allegro5:${HB_WITH_ALLEGRO5}
+-depincpath=allegro5:/usr/include/allegro5
+-depincpath=allegro5:/usr/local/include/allegro5
+-depincpath=allegro5:/usr/local/opt/cairo/include/allegro5
+
+-iinclude/nuklear_allegro5
+
+-hbx=include/${hb_name}.hbx
+
+src/*.c
+src/nuklear_allegro5/*.c
+
+$hb_pkg_dynlib.hbm
+$hb_pkg_install.hbm
