@@ -5,7 +5,7 @@
  *
  */
 
-#include "hb_glfw_opengl2.h"
+#include "hb_nuklear_glfw_gl2.h"
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* GLFWwindow */
