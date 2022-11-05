@@ -17,11 +17,11 @@
 //#define NK_ALLEGRO5_IMPLEMENTATION
 //#include "hb_nuklear_allegro5.h"
 
-#define NK_SDL_GL2_IMPLEMENTATION
-#include "hb_nuklear_sdl_gl2.h"
-
 //#define NK_GLFW_GL2_IMPLEMENTATION
 //#include "hb_glfw_opengl2.h"
+
+#define NK_SDL_GL2_IMPLEMENTATION
+#include "hb_nuklear_sdl_gl2.h"
 
 //#define NK_XLIB_IMPLEMENTATION
 //#include "hb_nuklear_xlib.h"
