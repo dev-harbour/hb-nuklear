@@ -1,5 +1,11 @@
 ## Installing on Windows
 
+- mingw-w64
+
+   ```
+   pacman -S mingw-w64-x86_64-glfw
+   ```
+
 ## Installing on Linux
 
 - Debian
