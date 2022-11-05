@@ -5,20 +5,11 @@
 #ifndef NUKLEAR_CH_
 #define NUKLEAR_CH_
 
-/* Custom implementation */
-#define DPY        1
-#define VIS        2
-#define CMAP       3
-#define WIN        4
-#define SCREEN     5
-#define FONT       6
-#define WIDTH      7
-#define HEIGHT     8
-#define WIN_NAME   9
-#define CTX        10
-
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 /* Nuklear */
+#define NK_RGB                       0
+#define NK_RGBA                      1
+
 #define NK_WINDOW_BORDER             0
 #define NK_WINDOW_MOVABLE            1
 #define NK_WINDOW_SCALABLE           2

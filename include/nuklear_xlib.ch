@@ -7,6 +7,18 @@
 
 #include "nuklear.ch"
 
+/* Custom implementation */
+#define DPY        1
+#define VIS        2
+#define CMAP       3
+#define WIN        4
+#define SCREEN     5
+#define FONT       6
+#define WIDTH      7
+#define HEIGHT     8
+#define WIN_NAME   9
+#define CTX        10
+
 /*****************************************************************
  *  COLOR MAP STUFF
  *****************************************************************/

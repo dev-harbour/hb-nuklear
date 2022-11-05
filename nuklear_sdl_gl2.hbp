@@ -1,0 +1,24 @@
+# nuklear_sdl_gl2
+
+-hblib
+-inc
+
+-olib/${hb_plat}/${hb_comp}/${hb_name}
+
+-w3 -es2 -gc3
+
+-depkeyhead=sdl2:SDL.h
+-depcontrol=sdl2:${HB_WITH_SDL2}
+-depincpath=sdl2:/usr/include/SDL2
+-depincpath=sdl2:/usr/local/include/SDL2
+-depincpath=sdl2:/usr/local/opt/cairo/include/SDL2
+
+-iinclude/nuklear_sdl_gl2
+
+-hbx=include/${hb_name}.hbx
+
+src/*.c
+src/nuklear_sdl_gl2/*.c
+
+$hb_pkg_dynlib.hbm
+$hb_pkg_install.hbm

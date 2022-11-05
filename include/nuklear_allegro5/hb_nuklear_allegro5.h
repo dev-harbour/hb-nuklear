@@ -2,8 +2,8 @@
  *
  */
 
-#ifndef NUKLEAR_ALLEGRO5_H_
-#define NUKLEAR_ALLEGRO5_H_
+#ifndef HB_NUKLEAR_ALLEGRO5_H_
+#define HB_NUKLEAR_ALLEGRO5_H_
 
 #include <stdbool.h>
 #include <stdio.h>
@@ -17,8 +17,6 @@
 #include "hbapierr.h"
 #include "hbapiitm.h"
 #include "hbstack.h"
-
-//#include
 
 #include "../nuklear.h"
 #include "nuklear_allegro5.h"
@@ -43,4 +41,4 @@ HB_EXTERN_END
 
 #define HB_ERR_ARGS() ( hb_errRT_BASE_SubstR( EG_ARG, 3012, NULL, HB_ERR_FUNCNAME, HB_ERR_ARGS_BASEPARAMS ) )
 
-#endif /* end NUKLEAR_ALLEGRO5_H_ */
+#endif /* end HB_NUKLEAR_ALLEGRO5_H_ */
