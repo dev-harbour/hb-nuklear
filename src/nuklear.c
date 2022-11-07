@@ -32,8 +32,35 @@
 // nk_bool nk_init_fixed(struct nk_context*, void *memory, nk_size size, const struct nk_user_font*);
 // nk_bool nk_init(struct nk_context*, struct nk_allocator*, const struct nk_user_font*);
 // nk_bool nk_init_custom(struct nk_context*, struct nk_buffer *cmds, struct nk_buffer *pool, const struct nk_user_font*);
+
 // void nk_clear(struct nk_context*);
+HB_FUNC( NK_CLEAR )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   if( ctx  )
+   {
+      nk_clear( ctx );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_free(struct nk_context*);
+HB_FUNC( NK_FREE )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   if( ctx  )
+   {
+      nk_free( ctx );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_set_user_data(struct nk_context*, nk_handle handle);
 
 // void nk_input_begin(struct nk_context*);
@@ -52,10 +79,36 @@ HB_FUNC( NK_INPUT_BEGIN )
 }
 
 // void nk_input_motion(struct nk_context*, int x, int y);
+HB_FUNC( NK_INPUT_MOTION )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   if( ctx && hb_param( 2, HB_IT_INTEGER ) != NULL && hb_param( 3, HB_IT_INTEGER ) != NULL )
+   {
+      nk_input_motion( ctx, hb_parni( 2 ), hb_parni( 3 ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_input_key(struct nk_context*, enum nk_keys, nk_bool down);
 // void nk_input_button(struct nk_context*, enum nk_buttons, int x, int y, nk_bool down);
 // void nk_input_scroll(struct nk_context*, struct nk_vec2 val);
+
 // void nk_input_char(struct nk_context*, char);
+HB_FUNC( NK_INPUT_CHAR )
+{
+   struct nk_context *ctx = hb_parptr( 1 );
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL )
+   {
+      nk_input_char( ctx, hb_parc( 2 ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
 // void nk_input_glyph(struct nk_context*, const nk_glyph);
 // void nk_input_unicode(struct nk_context*, nk_rune);
 
@@ -159,7 +212,31 @@ HB_FUNC( NK_WINDOW_IS_HIDDEN )
 // nk_bool nk_window_is_active(struct nk_context*, const char*);
 // nk_bool nk_window_is_any_hovered(struct nk_context*);
 // nk_bool nk_item_is_any_active(struct nk_context*);
+
 // void nk_window_set_bounds(struct nk_context*, const char *name, struct nk_rect bounds);
+HB_FUNC( NK_WINDOW_SET_BOUNDS )
+{
+   PHB_ITEM pArray;
+
+   struct nk_context *ctx = hb_parptr( 1 );
+
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL &&
+   ( pArray = hb_param( 3, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pArray ) == 4 && )
+   {
+      struct nk_rect bounds;
+      bounds.x = hb_arrayGetNI( pArray, 1 );
+      bounds.y = hb_arrayGetNI( pArray, 2 );
+      bounds.w = hb_arrayGetNI( pArray, 3 );
+      bounds.h = hb_arrayGetNI( pArray, 4 );
+
+      nk_window_set_bounds( ctx, hb_parc( 2 ), bounds );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
 // void nk_window_set_position(struct nk_context*, const char *name, struct nk_vec2 pos);
 // void nk_window_set_size(struct nk_context*, const char *name, struct nk_vec2);
 // void nk_window_set_focus(struct nk_context*, const char *name);
