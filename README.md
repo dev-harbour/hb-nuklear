@@ -1,6 +1,6 @@
 # hb-nuklear
 
-Harbour module implementing bindings to [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear). 
+Harbour module implementing bindings to [Nuklear](https://github.com/Immediate-Mode-UI/Nuklear).
 
 ### Getting Started
 
@@ -13,6 +13,9 @@ Installing hb-nuklear requires Nuklear including its headers. For more info see 
    ```
    hbmk2 nuklear_xlib.hbp
    ```
+
+- Build dynamic library:
+   $ hbmk2 -hbdyn hbtpl.hbp
 
 - Build and run sample and test code:
 
