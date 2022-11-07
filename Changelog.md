@@ -9,6 +9,12 @@
 ## 2022-11-07
 
 ### Added
+   - nk_glfw3_font_stash_begin( @atlas )
+   - nk_glfw3_font_stash_end()
+
+## 2022-11-07
+
+### Added
    - nk_clear()
    - nk_free()
    - nk_input_motion()
