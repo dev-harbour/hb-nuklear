@@ -564,11 +564,6 @@ HB_FUNC( NK_GLFW3_INIT )
    if( window && hb_param( 2, HB_IT_INTEGER ) != NULL )
    {
       hb_retptr( nk_glfw3_init( window, hb_parni( 2 ) ) );
-      {
-         struct nk_font_atlas *atlas;
-         nk_glfw3_font_stash_begin( &atlas );
-         nk_glfw3_font_stash_end();
-      }
    }
    else
    {
@@ -577,20 +572,24 @@ HB_FUNC( NK_GLFW3_INIT )
 }
 
 //NK_API void nk_glfw3_font_stash_begin(struct nk_font_atlas **atlas);
-// HB_FUNC( NK_GLFW3_FONT_STASH_BEGIN )
-// {
-//    if( hb_param( 1, HB_IT_BYREF ) != NULL )
-//    {
-//       struct nk_font_atlas *atlas;
-//       nk_glfw3_font_stash_begin( &atlas );
-//    }
-//    else
-//    {
-//       HB_ERR_ARGS();
-//    }
-// }
+HB_FUNC( NK_GLFW3_FONT_STASH_BEGIN )
+{
+   if( hb_param( 1, HB_IT_NIL ) == NULL )
+   {
+      struct nk_font_atlas *atlas;
+      nk_glfw3_font_stash_begin( &atlas );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
 
 //NK_API void nk_glfw3_font_stash_end(void);
+HB_FUNC( NK_GLFW3_FONT_STASH_END )
+{
+   nk_glfw3_font_stash_end();
+}
 
 //NK_API void nk_glfw3_new_frame(void);
 HB_FUNC( NK_GLFW3_NEW_FRAME )
