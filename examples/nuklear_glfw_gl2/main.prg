@@ -26,6 +26,9 @@ PROCEDURE Main()
 
    pCtx := nk_glfw3_init( pWin, NK_GLFW3_INSTALL_CALLBACKS )
 
+   nk_glfw3_font_stash_begin( NIL )
+   nk_glfw3_font_stash_end()
+
    WHILE( ! glfwWindowShouldClose( pWin ) )
 
       glfwPollEvents()
