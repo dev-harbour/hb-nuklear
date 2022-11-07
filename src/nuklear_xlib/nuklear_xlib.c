@@ -7,6 +7,8 @@
 
 #include "hb_nuklear_xlib.h"
 
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* Custom implementation */
 typedef struct _NuklearXlib
 {
    Display             *dpy;
@@ -132,6 +134,251 @@ HB_FUNC( CLOSEWINDOW )
       XFreeColormap( s_w.dpy, s_w.cmap );
       XDestroyWindow( s_w.dpy, s_w.win );
       XCloseDisplay( s_w.dpy );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+/* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
+/* xlib */
+// extern Display *XOpenDisplay( _Xconst char* display_name );
+HB_FUNC( XOPENDISPLAY )
+{
+   hb_retptr( XOpenDisplay( NULL ) );
+}
+
+// extern Window XDefaultRootWindow( Display *display );
+HB_FUNC( XDEFAULTROOTWINDOW )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display )
+   {
+      hb_retnl( ( unsigned long ) XDefaultRootWindow( display ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern int XDefaultScreen( Display *display );
+HB_FUNC( XDEFAULTSCREEN )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display )
+   {
+      hb_retni( XDefaultScreen( display ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern Visual *XDefaultVisual( Display *display, int screen_number );
+HB_FUNC( XDEFAULTVISUAL )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display && hb_param( 2, HB_IT_INTEGER ) != NULL )
+   {
+      hb_retptr( XDefaultVisual( display, hb_parni( 2 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern Colormap XCreateColormap( Display *display, Window w, Visual *visual, int alloc );
+HB_FUNC( XCREATECOLORMAP )
+{
+   Display *display = hb_parptr( 1 );
+   Visual *visual = hb_parptr( 3 );
+
+   if( display && hb_param( 2, HB_IT_LONG ) != NULL && visual && hb_param( 4, HB_IT_INTEGER ) != NULL )
+   {
+      hb_retnl( ( unsigned long ) XCreateColormap( display, ( unsigned long ) hb_parnl( 2 ), visual, hb_parni( 4 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+/* extern Window XCreateWindow( Display *display, Window parent, int x, int y, unsigned int width, unsigned int height, unsigned int border_width,
+                                int depth, unsigned int class, Visual *visual, unsigned long valuemask, XSetWindowAttributes* attributes ); */
+HB_FUNC( XCREATEWINDOW )
+{
+   Display *display = hb_parptr( 1 );
+   Visual *visual = hb_parptr( 10 );
+   PHB_ITEM pItem;
+
+   if( display &&
+      hb_param( 2, HB_IT_LONG ) != NULL &&
+      hb_param( 3, HB_IT_INTEGER ) != NULL &&
+      hb_param( 4, HB_IT_INTEGER ) != NULL &&
+      hb_param( 5, HB_IT_INTEGER ) != NULL &&
+      hb_param( 6, HB_IT_INTEGER ) != NULL &&
+      hb_param( 7, HB_IT_INTEGER ) != NULL &&
+      hb_param( 8, HB_IT_INTEGER ) != NULL &&
+      hb_param( 9, HB_IT_INTEGER ) != NULL &&
+      hb_param( 10, HB_IT_POINTER ) != NULL &&
+      hb_param( 11, HB_IT_NUMERIC ) != NULL &&
+      ( pItem = hb_param( 12, HB_IT_ARRAY ) ) != NULL )
+   {
+      XSetWindowAttributes swa;
+      memset( &swa, 0, sizeof( swa ) );
+
+      swa.background_pixmap     = hb_arrayGetNL( pItem, 1 );   // Pixmap
+      swa.background_pixel      = hb_arrayGetNL( pItem, 2 );   // unsigned long
+      swa.border_pixmap         = hb_arrayGetNL( pItem, 3 );   // Pixmap
+      swa.border_pixel          = hb_arrayGetNL( pItem, 4 );   // unsigned long
+      swa.bit_gravity           = hb_arrayGetNI( pItem, 5 );   // int
+      swa.win_gravity           = hb_arrayGetNI( pItem, 6 );   // int
+      swa.backing_store         = hb_arrayGetNI( pItem, 7 );   // int
+      swa.backing_planes        = hb_arrayGetNL( pItem, 8 );   // unsigned long
+      swa.backing_pixel         = hb_arrayGetNL( pItem, 9 );   // unsigned long
+      swa.save_under            = hb_arrayGetL ( pItem, 10 );  // Bool
+      swa.event_mask            = hb_arrayGetNL( pItem, 11 );  // long
+      swa.do_not_propagate_mask = hb_arrayGetNL( pItem, 12 );  // long
+      swa.override_redirect     = hb_arrayGetL ( pItem, 13 );  // Bool
+      swa.colormap              = hb_arrayGetNL( pItem, 14 );  // Colormap
+      swa.cursor                = hb_arrayGetNI( pItem, 15 );  // Cursor
+
+      hb_retnl( ( unsigned long ) XCreateWindow( display, ( unsigned long ) hb_parnl( 2 ), hb_parni( 3 ), hb_parni( 4 ), ( unsigned int ) hb_parni( 5 ),
+         ( unsigned int ) hb_parni( 6 ), ( unsigned int ) hb_parni( 7 ), hb_parni( 8 ), ( unsigned int ) hb_parni( 9 ), visual,
+         ( unsigned long ) hb_parnl( 11 ), &swa ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern int XDefaultDepth( Display *display, int screen_number );
+HB_FUNC( XDEFAULTDEPTH )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display && hb_param( 2, HB_IT_INTEGER ) != NULL )
+   {
+      hb_retni( XDefaultDepth( display, hb_parni( 2 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern int XStoreName( Display *display, Window w, _Xconst char* window_name );
+HB_FUNC( XSTORENAME )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display &&
+      hb_param( 2, HB_IT_LONG ) != NULL &&
+      hb_param( 3, HB_IT_STRING ) != NULL )
+   {
+      hb_retni( XStoreName( display, ( unsigned long ) hb_parnl( 2 ), hb_parc( 3 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern int XMapWindow( Display *display, Window w );
+HB_FUNC( XMAPWINDOW )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display && hb_param( 2, HB_IT_LONG ) != NULL )
+   {
+      hb_retni( XMapWindow( display, ( unsigned long ) hb_parnl( 2 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern Atom XInternAtom( Display *display, _Xconst char* atom_name, Bool only_if_exists );
+HB_FUNC( XINTERNATOM )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display &&
+      hb_param( 2, HB_IT_STRING ) != NULL  &&
+      hb_param( 3, HB_IT_LOGICAL ) != NULL )
+   {
+      hb_retnl( ( unsigned long ) XInternAtom( display, hb_parc( 2 ), hb_parl( 3 ) ) );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern Status XSetWMProtocols( Display *display, Window w, Atom* protocols, int count );
+HB_FUNC( XSETWMPROTOCOLS )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display &&
+      hb_param( 2, HB_IT_LONG ) != NULL &&
+      hb_param( 3, HB_IT_LONG ) != NULL &&
+      hb_param( 4, HB_IT_INTEGER ) != NULL )
+   {
+      Atom protocols;
+      hb_retni( XSetWMProtocols( display, ( unsigned long ) hb_parnl( 2 ), &protocols, hb_parni( 4 ) ) );
+      hb_stornl( protocols, 3 );
+   }
+   else
+   {
+      HB_ERR_ARGS();
+   }
+}
+
+// extern Status XGetWindowAttributes( Display *display, Window w, XWindowAttributes* window_attributes_return );
+HB_FUNC( XGETWINDOWATTRIBUTES )
+{
+   Display *display = hb_parptr( 1 );
+
+   if( display && hb_param( 2, HB_IT_LONG ) != NULL )
+   {
+      XWindowAttributes wa;
+
+      hb_retni( XGetWindowAttributes( display, ( unsigned long ) hb_parnl( 2 ), &wa ) );
+
+      hb_reta( 23 );
+      hb_storvni(  wa.x,                     -1, 1 );
+      hb_storvni(  wa.y,                     -1, 2 );
+      hb_storvni(  wa.width,                 -1, 3 );
+      hb_storvni(  wa.height,                -1, 4 );
+      hb_storvni(  wa.border_width,          -1, 5 );
+      hb_storvni(  wa.depth,                 -1, 6 );
+      hb_storvptr( wa.visual,                -1, 7 );
+      hb_storvnl(  wa.root,                  -1, 8 );
+      hb_storvni(  wa.class,                 -1, 9 );
+      hb_storvni(  wa.bit_gravity,           -1, 10 );
+      hb_storvni(  wa.win_gravity,           -1, 11 );
+      hb_storvni(  wa.backing_store,         -1, 12 );
+      hb_storvnl(  wa.backing_planes,        -1, 13 );
+      hb_storvnl(  wa.backing_pixel,         -1, 14 );
+      hb_storvl(   wa.save_under,            -1, 15 );
+      hb_storvnl(  wa.colormap,              -1, 16 );
+      hb_storvl(   wa.map_installed,         -1, 17 );
+      hb_storvni(  wa.map_state,             -1, 18 );
+      hb_storvnl(  wa.all_event_masks,       -1, 19 );
+      hb_storvnl(  wa.your_event_mask,       -1, 20 );
+      hb_storvnl(  wa.do_not_propagate_mask, -1, 21 );
+      hb_storvl(   wa.override_redirect,     -1, 22 );
+      hb_storvptr( wa.screen,                -1, 23 );
    }
    else
    {
