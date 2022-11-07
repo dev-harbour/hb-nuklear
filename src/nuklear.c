@@ -95,20 +95,7 @@ HB_FUNC( NK_INPUT_MOTION )
 // void nk_input_key(struct nk_context*, enum nk_keys, nk_bool down);
 // void nk_input_button(struct nk_context*, enum nk_buttons, int x, int y, nk_bool down);
 // void nk_input_scroll(struct nk_context*, struct nk_vec2 val);
-
 // void nk_input_char(struct nk_context*, char);
-HB_FUNC( NK_INPUT_CHAR )
-{
-   struct nk_context *ctx = hb_parptr( 1 );
-   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL )
-   {
-      nk_input_char( ctx, hb_parc( 2 ) );
-   }
-   else
-   {
-      HB_ERR_ARGS();
-   }
-}
 // void nk_input_glyph(struct nk_context*, const nk_glyph);
 // void nk_input_unicode(struct nk_context*, nk_rune);
 
@@ -220,14 +207,14 @@ HB_FUNC( NK_WINDOW_SET_BOUNDS )
 
    struct nk_context *ctx = hb_parptr( 1 );
 
-   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL &&
-   ( pArray = hb_param( 3, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pArray ) == 4 && )
+   if( ctx && hb_param( 2, HB_IT_STRING ) != NULL && ( pArray = hb_param( 3, HB_IT_ARRAY ) ) != NULL && hb_arrayLen( pArray ) == 4 )
    {
       struct nk_rect bounds;
-      bounds.x = hb_arrayGetNI( pArray, 1 );
-      bounds.y = hb_arrayGetNI( pArray, 2 );
-      bounds.w = hb_arrayGetNI( pArray, 3 );
-      bounds.h = hb_arrayGetNI( pArray, 4 );
+
+      bounds.x = ( float ) hb_arrayGetND( pArray, 1 );
+      bounds.y = ( float ) hb_arrayGetND( pArray, 2 );
+      bounds.w = ( float ) hb_arrayGetND( pArray, 3 );
+      bounds.h = ( float ) hb_arrayGetND( pArray, 4 );
 
       nk_window_set_bounds( ctx, hb_parc( 2 ), bounds );
    }
