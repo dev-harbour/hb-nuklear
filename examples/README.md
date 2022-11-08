@@ -23,6 +23,13 @@
    ```
    pacman -S mingw-w64-x86_64-glfw
    ```
+   necessary packages and environment variable
+
+   e.g.
+
+   ```
+   export HB_WITH_GLFW=/mingw64/include/GLFW
+   ```
 
 ## Installing on Linux
 
