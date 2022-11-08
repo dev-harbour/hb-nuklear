@@ -195,7 +195,7 @@ HB_FUNC( SDL_GL_DELETECONTEXT )
    {
       SDL_Window *glContext = *pGLContext;
       *pGLContext = NULL;
-      SDL_DestroyWindow( glContext );
+      SDL_GL_DeleteContext( glContext );
    }
    else
    {
