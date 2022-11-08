@@ -23,7 +23,7 @@
    ```
    pacman -S mingw-w64-x86_64-glfw
    ```
-   necessary packages and environment variable
+   Install necessary packages and environment variable
 
    e.g.
 
