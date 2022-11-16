@@ -11,7 +11,6 @@
 -depcontrol=sdl2:${HB_WITH_SDL2}
 -depincpath=sdl2:/usr/include/SDL2
 -depincpath=sdl2:/usr/local/include/SDL2
--depincpath=sdl2:/usr/local/opt/cairo/include/SDL2
 
 -iinclude/nuklear_sdl_gl2
 

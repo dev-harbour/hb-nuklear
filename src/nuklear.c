@@ -14,17 +14,25 @@
 #define NK_INCLUDE_STANDARD_VARARGS
 #define NK_BUTTON_TRIGGER_ON_RELEASE
 
-//#define NK_ALLEGRO5_IMPLEMENTATION
-//#include "hb_nuklear_allegro5.h"
+#if defined( HBMK_HAS_ALLEGRO5 )
+   #define NK_ALLEGRO5_IMPLEMENTATION
+   #include "hb_nuklear_allegro5.h"
+#endif
 
-//#define NK_GLFW_GL2_IMPLEMENTATION
-//#include "hb_nuklear_glfw_gl2.h"
+#if defined( HBMK_HAS_GLFW )
+   #define NK_GLFW_GL2_IMPLEMENTATION
+   #include "hb_nuklear_glfw_gl2.h"
+#endif
 
-#define NK_SDL_GL2_IMPLEMENTATION
-#include "hb_nuklear_sdl_gl2.h"
+#if defined( HBMK_HAS_SDL2 )
+   #define NK_SDL_GL2_IMPLEMENTATION
+   #include "hb_nuklear_sdl_gl2.h"
+#endif
 
-//#define NK_XLIB_IMPLEMENTATION
-//#include "hb_nuklear_xlib.h"
+#if defined( HBMK_HAS_XLIB )
+   #define NK_XLIB_IMPLEMENTATION
+   #include "hb_nuklear_xlib.h"
+#endif
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= */
 

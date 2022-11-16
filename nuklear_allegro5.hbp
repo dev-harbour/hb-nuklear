@@ -11,7 +11,6 @@
 -depcontrol=allegro5:${HB_WITH_ALLEGRO5}
 -depincpath=allegro5:/usr/include/allegro5
 -depincpath=allegro5:/usr/local/include/allegro5
--depincpath=allegro5:/usr/local/opt/cairo/include/allegro5
 
 -iinclude/nuklear_allegro5
 
