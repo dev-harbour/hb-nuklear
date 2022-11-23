@@ -24,6 +24,12 @@
    #include "hb_nuklear_glfw_gl2.h"
 #endif
 
+#if defined( HBMK_HAS_GLFW3 )
+   #define NK_GLFW_GL3_IMPLEMENTATION
+   #include "hb_nuklear_glfw_gl3.h"
+#endif
+
+
 #if defined( HBMK_HAS_SDL2 )
    #define NK_SDL_GL2_IMPLEMENTATION
    #include "hb_nuklear_sdl_gl2.h"
