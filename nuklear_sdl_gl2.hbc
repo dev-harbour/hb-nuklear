@@ -6,10 +6,16 @@ headers=include/${hb_name}.ch
 libs=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
 
 #Windows
+{win}libs=SDL2
+{win}libs=opengl32
 
-#linux
-libs=SDL2
-libs=GL
+#Linux
+{linux}libs=SDL2
+{linux}libs=GL
+
+#Darwin
+{darwin}libs=SDL2
+{darwin}libs=OpenGL
 
 libpaths=lib/${hb_plat}/${hb_comp}
 {darwin}libpaths=/usr/local/lib

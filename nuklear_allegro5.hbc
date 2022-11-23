@@ -5,9 +5,6 @@ headers=include/${hb_name}.ch
 
 libs=${_HB_DYNPREF}${hb_name}${_HB_DYNSUFF}
 
-#Windows
-
-#linux
 libs=allegro
 libs=allegro_main
 libs=allegro_image
